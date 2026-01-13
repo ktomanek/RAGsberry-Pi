@@ -1,16 +1,13 @@
 import os
 import time
+import json
 import numpy as np
 import faiss
-import json
 from sentence_transformers import SentenceTransformer
-from tqdm import tqdm
 from llm_client import LLMClient
 
 # --- Configuration ---
-# Stage 1: Indexing Configuration
-RECREATE_INDEX = False  # Set to True to rebuild the index from scratch
-TEXT_FILE_PATH = "data/wikitext2.txt"
+# Stage 1: Index Loading Configuration
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 FAISS_INDEX_PATH = "index_my_document.faiss"
 
@@ -30,21 +27,42 @@ DEBUG_PROMPT = True  # Set to True to print the full prompt sent to the LLM
 
 # --- Helper Functions ---
 
-def simple_text_splitter(text, chunk_size=3, chunk_overlap=1):
+def load_index(faiss_index_path, embedding_model_name):
     """
-    A very simple text splitter that splits by sentences.
-    A more robust solution would use LangChain's RecursiveCharacterTextSplitter.
+    Load an existing FAISS index and its associated chunks.
+
+    Args:
+        faiss_index_path: Path to the FAISS index file
+        embedding_model_name: Name of the sentence transformer model
+
+    Returns:
+        Tuple of (index, chunks, model, loading_duration)
     """
-    sentences = text.replace("\n", " ").split('. ')
-    sentences = [s.strip() for s in sentences if s.strip()]
-    
-    chunks = []
-    for i in range(0, len(sentences), chunk_size - chunk_overlap):
-        chunk = ". ".join(sentences[i:i + chunk_size])
-        if chunk:
-            chunks.append(chunk + ".")
-            
-    return chunks
+    print(f"Loading existing index from '{faiss_index_path}'...")
+    start_time_loading = time.time()
+
+    # Load the embedding model
+    print(f"Loading embedding model: {embedding_model_name}...")
+    model = SentenceTransformer(embedding_model_name)
+    embedding_dim = model.get_sentence_embedding_dimension()
+    print(f"Model loaded. Embedding dimension: {embedding_dim}")
+
+    # Load the index
+    index = faiss.read_index(faiss_index_path)
+
+    # Load the chunks
+    with open(faiss_index_path + ".json", 'r') as f:
+        chunks = json.load(f)
+
+    end_time_loading = time.time()
+    loading_duration = end_time_loading - start_time_loading
+
+    print(f"Loaded {len(chunks)} chunks from existing index.")
+    print("-----------------------------------------------------")
+    print(f"BENCHMARK: Loading index took {loading_duration:.4f} seconds.")
+    print("-----------------------------------------------------")
+
+    return index, chunks, model, loading_duration
 
 # --- Main Benchmarking Script ---
 
@@ -75,81 +93,26 @@ def main():
         print("Continuing with benchmark - first LLM call may be slower.")
 
     # ==================================================================
-    # STAGE 1: INDEXING
+    # STAGE 1: LOAD INDEX
     # ==================================================================
-    print("\n--- STAGE 1: INDEXING ---")
+    print("\n--- STAGE 1: LOAD INDEX ---")
 
-    # Load the embedding model
-    # The first time this runs, it will download the model. This is a one-time cost.
-    print(f"Loading embedding model: {EMBEDDING_MODEL_NAME}...")
-    model = SentenceTransformer(EMBEDDING_MODEL_NAME)
-    embedding_dim = model.get_sentence_embedding_dimension()
-    print(f"Model loaded. Embedding dimension: {embedding_dim}")
+    # Check if index exists
+    if not (os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_INDEX_PATH + ".json")):
+        print(f"Error: Index not found at '{FAISS_INDEX_PATH}'")
+        print("\nTo create an index, run:")
+        print(f"  python index_generation.py --index-path {FAISS_INDEX_PATH}")
+        return
 
-    # Check if index exists and whether to recreate
-    index_exists = os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_INDEX_PATH + ".json")
-
-    if index_exists and not RECREATE_INDEX:
-        print(f"Loading existing index from '{FAISS_INDEX_PATH}'...")
-        start_time_indexing = time.time()
-
-        # Load the index
-        index = faiss.read_index(FAISS_INDEX_PATH)
-
-        # Load the chunks
-        with open(FAISS_INDEX_PATH + ".json", 'r') as f:
-            chunks = json.load(f)
-
-        end_time_indexing = time.time()
-        indexing_duration = end_time_indexing - start_time_indexing
-
-        print(f"Loaded {len(chunks)} chunks from existing index.")
-        print("-----------------------------------------------------")
-        print(f"BENCHMARK: Loading index took {indexing_duration:.4f} seconds.")
-        print("-----------------------------------------------------")
-    else:
-        if RECREATE_INDEX:
-            print("RECREATE_INDEX is True. Building index from scratch...")
-        else:
-            print("No existing index found. Building index from scratch...")
-
-        start_time_indexing = time.time()
-
-        # Load and chunk the document
-        try:
-            with open(TEXT_FILE_PATH, 'r', encoding='utf-8') as f:
-                text_content = f.read()
-        except FileNotFoundError:
-            print(f"Error: The file '{TEXT_FILE_PATH}' was not found.")
-            return
-
-        # Using a simple sentence-based chunking strategy
-        chunks = simple_text_splitter(text_content)
-        print(f"Document split into {len(chunks)} chunks.")
-
-        # Generate embeddings for each chunk
-        print("Generating embeddings for all chunks...")
-        chunk_embeddings = model.encode(chunks, show_progress_bar=True)
-
-        # Create a FAISS index
-        print("Creating FAISS index...")
-        # Using IndexFlatL2 - a simple L2 distance (Euclidean) index
-        index = faiss.IndexFlatL2(embedding_dim)
-        index.add(np.array(chunk_embeddings).astype('float32'))
-
-        # Save the index and the chunks
-        # We need to save the chunks themselves to retrieve the text later
-        faiss.write_index(index, FAISS_INDEX_PATH)
-        with open(FAISS_INDEX_PATH + ".json", 'w') as f:
-            json.dump(chunks, f)
-
-        end_time_indexing = time.time()
-        indexing_duration = end_time_indexing - start_time_indexing
-
-        print(f"FAISS index created and saved to '{FAISS_INDEX_PATH}'")
-        print("-----------------------------------------------------")
-        print(f"BENCHMARK: Indexing took {indexing_duration:.4f} seconds.")
-        print("-----------------------------------------------------")
+    # Load existing index
+    try:
+        index, chunks, model, indexing_duration = load_index(
+            faiss_index_path=FAISS_INDEX_PATH,
+            embedding_model_name=EMBEDDING_MODEL_NAME
+        )
+    except Exception as e:
+        print(f"Error loading index: {e}")
+        return
 
 
     # ==================================================================

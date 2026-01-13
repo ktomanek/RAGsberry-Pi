@@ -3,4 +3,5 @@ venv
 *.faiss
 *.faiss.json
 models
-
+llama_server.log
+llama_server.pid
