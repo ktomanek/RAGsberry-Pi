@@ -39,7 +39,7 @@ model | avg LLM generation time
 ---- | --- 
 LFM2 350m | 0.6044 ± 0.0255 seconds (avg of 5 runs), 0.6059 ± 0.0265 seconds (avg of 5 runs)
 LFM2 1.2b | 2.1979 ± 0.0362 seconds (avg of 5 runs), 2.2052 ± 0.0198 seconds (avg of 5 runs)
-LFM2 1.2b RAG | 2.2412 ± 0.0262 seconds (avg of 5 runs), 2.2301 ± 0.0168 seconds (avg of 5 runs)
+LFM2 1.2b RAG | 1.8304 ± 0.0265 seconds (avg of 5 runs), 1.8365 ± 0.0245 seconds (avg of 5 runs)
 Gemma3 1b | 1.6662 ± 0.1678 seconds (avg of 5 runs), 1.7226 ± 0.1724 seconds (avg of 5 runs)
 
 
@@ -76,3 +76,10 @@ Gemma3 1b | 0.8827 ± 0.1609 seconds (avg of 5 runs)
 # TODOs
 
 * have claude run experiments
+ * make length and temp configurable
+ * specify which models
+ * output documenbt
+* re-index with documen title
+* test gemma3 270 on RPI
+* construct a few better test cases to test efficiency
+* add baseline to results --> without RAG

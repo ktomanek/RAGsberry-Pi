@@ -17,12 +17,16 @@ FAISS_INDEX_PATH = "index_my_document.faiss"
 # Stage 2: Search & Retrieval Configuration
 TOP_K = 3 # Number of relevant chunks to retrieve
 
+USER_QUERY = "What was the Sinclair Sovereign? Include what type of device it was, the year it was introduced, its price range, and one notable or special fact about it."
+
 # Stage 3: LLM Response Configuration
 LLAMA_SERVER_BASE_URL = "http://localhost:8080/v1"  # llama-server OpenAI-compatible API
 DEFAULT_LLM_SERVER_MODEL = "dummy"  # Model name (can be any string when running single model)
 N_LLM_RUNS = 5  # Number of times to repeat LLM generation for averaging
 LLM_GEN_TEMPERATURE = 0.0  # Temperature for generation (0=deterministic, 0.8-1.0=creative, default was ~0.8)
 MAX_LLM_GEN_TOKENS = 200  # Maximum tokens to generate (controls output length and reduces variance)
+PROMPT_FORMAT = "lfm2-rag"  # "default" or "lfm2-rag" (for LFM2-RAG model)
+DEBUG_PROMPT = True  # Set to True to print the full prompt sent to the LLM
 
 # --- Helper Functions ---
 
@@ -60,6 +64,8 @@ def main():
             _ = client.chat.completions.create(
                 model=DEFAULT_LLM_SERVER_MODEL,
                 messages=[{"role": "user", "content": warmup_prompt}],
+                temperature=LLM_GEN_TEMPERATURE,
+                max_tokens=MAX_LLM_GEN_TOKENS,
                 stream=False
             )
             warmup_duration = time.time() - start_warmup
@@ -151,7 +157,7 @@ def main():
     # ==================================================================
     print("\n--- STAGE 2: SEARCH & RETRIEVAL ---")
     
-    query = "What was the Sinclair Sovereign and how much did it cost?"
+    query = USER_QUERY
     print(f"Sample Query: '{query}'")
 
     
@@ -186,14 +192,30 @@ def main():
     # STAGE 3: LLM RESPONSE GENERATION
     # ==================================================================
     print("\n--- STAGE 3: LLM RESPONSE GENERATION ---")
+    print(f"Using prompt format: {PROMPT_FORMAT}")
 
-    # Prepare the context for the LLM
-    context_str = "\n\n".join(retrieved_chunks)
+    # Prepare the messages based on the selected prompt format
+    if PROMPT_FORMAT == "lfm2-rag":
+        # LFM2-RAG format: system message with documents, user message with question
+        documents_str = ""
+        for i, chunk in enumerate(retrieved_chunks, 1):
+            documents_str += f"<document{i}>\n{chunk}\n</document{i}>\n\n"
 
-    # Create the prompt
-    prompt = f"""
-Based on the following context, please answer the user's question.
+        system_message = f"""The following documents may provide you additional information to answer questions:
+
+{documents_str.strip()}
+
+Instructions: Provide clear, concise answers based only on the information in the documents. Limit your response to 3-4 sentences maximum. Be direct and avoid unnecessary elaboration."""
+        messages = [
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": query}
+        ]
+    else:
+        # Default format: single user message with context and question
+        context_str = "\n\n".join(retrieved_chunks)
+        prompt = f"""Based on the following context, please answer the user's question concisely and directly.
 If the context does not contain the answer, state that the information is not available in the provided context.
+Limit your response to 3-4 sentences maximum. Be clear and focused - avoid unnecessary elaboration.
 
 Context:
 {context_str}
@@ -203,6 +225,20 @@ Question:
 
 Answer:
 """
+        messages = [
+            {"role": "user", "content": prompt}
+        ]
+
+    # Debug: Print the prompt if DEBUG_PROMPT is enabled
+    if DEBUG_PROMPT:
+        print("\n" + "="*60)
+        print("DEBUG: Prompt sent to LLM:")
+        print("="*60)
+        for msg in messages:
+            print(f"\n[{msg['role'].upper()}]")
+            print(msg['content'])
+            print("-"*60)
+        print("="*60 + "\n")
 
     print(f"Running LLM generation {N_LLM_RUNS} times for statistics...")
     print(f"(Using temperature={LLM_GEN_TEMPERATURE} and max_tokens={MAX_LLM_GEN_TOKENS} for consistency)\n")
@@ -218,9 +254,7 @@ Answer:
 
                 response = client.chat.completions.create(
                     model=DEFAULT_LLM_SERVER_MODEL,
-                    messages=[
-                        {"role": "user", "content": prompt}
-                    ],
+                    messages=messages,
                     temperature=LLM_GEN_TEMPERATURE,
                     max_tokens=MAX_LLM_GEN_TOKENS,
                     stream=False

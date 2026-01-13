@@ -7,3 +7,5 @@ mkdir -p models/llms
 # and/or others...
 
 # https://huggingface.co/LiquidAI/LFM2-1.2B-RAG-GGUF
+
+# https://huggingface.co/unsloth/gemma-3-270m-it-GGUF

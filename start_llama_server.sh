@@ -1,24 +1,22 @@
 #!/bin/bash
 
-# Start llama server in the background
-MODEL_PATH="models/LFM2-1.2B-RAG-Q4_K_M.gguf"
+# Check if model path is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <model_path>"
+    echo "Example: $0 models/LFM2-1.2B-RAG-Q4_K_M.gguf"
+    exit 1
+fi
+
+MODEL_PATH="$1"
 LOG_FILE="llama_server.log"
 PID_FILE="llama_server.pid"
 
-# Check if server is already running
-if [ -f "$PID_FILE" ]; then
-    PID=$(cat "$PID_FILE")
-    if ps -p "$PID" > /dev/null 2>&1; then
-        echo "Llama server is already running (PID: $PID)"
-        exit 1
-    else
-        echo "Removing stale PID file"
-        rm "$PID_FILE"
-    fi
-fi
+# Delete old log and PID files if they exist
+[ -f "$LOG_FILE" ] && rm "$LOG_FILE"
+[ -f "$PID_FILE" ] && rm "$PID_FILE"
 
 # Start the server in the background
-echo "Starting llama server..."
+echo "Starting llama server with model: $MODEL_PATH"
 nohup llama-server -m "$MODEL_PATH" > "$LOG_FILE" 2>&1 &
 SERVER_PID=$!
 
