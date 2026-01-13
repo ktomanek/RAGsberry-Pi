@@ -2,23 +2,27 @@ import os
 import time
 import numpy as np
 import faiss
-import requests
 import json
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
+from llm_client import LLMClient
 
 # --- Configuration ---
 # Stage 1: Indexing Configuration
-TEXT_FILE_PATH = "my_document.txt"
+RECREATE_INDEX = False  # Set to True to rebuild the index from scratch
+TEXT_FILE_PATH = "data/wikitext2.txt"
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-FAISS_INDEX_PATH = "my_document.faiss"
+FAISS_INDEX_PATH = "index_my_document.faiss"
 
 # Stage 2: Search & Retrieval Configuration
 TOP_K = 3 # Number of relevant chunks to retrieve
 
 # Stage 3: LLM Response Configuration
-OLLAMA_MODEL_NAME = "gemma3:1b" # The model you pulled with "ollama pull"
-OLLAMA_API_URL = "http://localhost:11434/api/generate"
+LLAMA_SERVER_BASE_URL = "http://localhost:8080/v1"  # llama-server OpenAI-compatible API
+DEFAULT_LLM_SERVER_MODEL = "dummy"  # Model name (can be any string when running single model)
+N_LLM_RUNS = 5  # Number of times to repeat LLM generation for averaging
+LLM_GEN_TEMPERATURE = 0.0  # Temperature for generation (0=deterministic, 0.8-1.0=creative, default was ~0.8)
+MAX_LLM_GEN_TOKENS = 200  # Maximum tokens to generate (controls output length and reduces variance)
 
 # --- Helper Functions ---
 
@@ -44,10 +48,31 @@ def main():
     print("--- RAG Performance Benchmark on Raspberry Pi ---")
 
     # ==================================================================
+    # WARMUP: LLM
+    # ==================================================================
+    print("\n--- Warming up LLM ---")
+    try:
+        # Use a long string to warm up KV cache (content doesn't matter, just length)
+        warmup_prompt = "warmup " * 100  # ~100 tokens to warm up the model
+
+        with LLMClient(base_url=LLAMA_SERVER_BASE_URL, api_key="dummy") as client:
+            start_warmup = time.time()
+            _ = client.chat.completions.create(
+                model=DEFAULT_LLM_SERVER_MODEL,
+                messages=[{"role": "user", "content": warmup_prompt}],
+                stream=False
+            )
+            warmup_duration = time.time() - start_warmup
+            print(f"LLM warmed up in {warmup_duration:.2f} seconds.")
+    except Exception as e:
+        print(f"Warning: Could not warm up LLM: {e}")
+        print("Continuing with benchmark - first LLM call may be slower.")
+
+    # ==================================================================
     # STAGE 1: INDEXING
     # ==================================================================
     print("\n--- STAGE 1: INDEXING ---")
-    
+
     # Load the embedding model
     # The first time this runs, it will download the model. This is a one-time cost.
     print(f"Loading embedding model: {EMBEDDING_MODEL_NAME}...")
@@ -55,43 +80,70 @@ def main():
     embedding_dim = model.get_sentence_embedding_dimension()
     print(f"Model loaded. Embedding dimension: {embedding_dim}")
 
-    start_time_indexing = time.time()
+    # Check if index exists and whether to recreate
+    index_exists = os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_INDEX_PATH + ".json")
 
-    # Load and chunk the document
-    try:
-        with open(TEXT_FILE_PATH, 'r', encoding='utf-8') as f:
-            text_content = f.read()
-    except FileNotFoundError:
-        print(f"Error: The file '{TEXT_FILE_PATH}' was not found.")
-        return
+    if index_exists and not RECREATE_INDEX:
+        print(f"Loading existing index from '{FAISS_INDEX_PATH}'...")
+        start_time_indexing = time.time()
 
-    # Using a simple sentence-based chunking strategy
-    chunks = simple_text_splitter(text_content)
-    print(f"Document split into {len(chunks)} chunks.")
+        # Load the index
+        index = faiss.read_index(FAISS_INDEX_PATH)
 
-    # Generate embeddings for each chunk
-    print("Generating embeddings for all chunks...")
-    chunk_embeddings = model.encode(chunks, show_progress_bar=True)
-    
-    # Create a FAISS index
-    print("Creating FAISS index...")
-    # Using IndexFlatL2 - a simple L2 distance (Euclidean) index
-    index = faiss.IndexFlatL2(embedding_dim)
-    index.add(np.array(chunk_embeddings).astype('float32'))
+        # Load the chunks
+        with open(FAISS_INDEX_PATH + ".json", 'r') as f:
+            chunks = json.load(f)
 
-    # Save the index and the chunks
-    # We need to save the chunks themselves to retrieve the text later
-    faiss.write_index(index, FAISS_INDEX_PATH)
-    with open(FAISS_INDEX_PATH + ".json", 'w') as f:
-        json.dump(chunks, f)
+        end_time_indexing = time.time()
+        indexing_duration = end_time_indexing - start_time_indexing
 
-    end_time_indexing = time.time()
-    indexing_duration = end_time_indexing - start_time_indexing
-    
-    print(f"FAISS index created and saved to '{FAISS_INDEX_PATH}'")
-    print("-----------------------------------------------------")
-    print(f"BENCHMARK: Indexing took {indexing_duration:.4f} seconds.")
-    print("-----------------------------------------------------")
+        print(f"Loaded {len(chunks)} chunks from existing index.")
+        print("-----------------------------------------------------")
+        print(f"BENCHMARK: Loading index took {indexing_duration:.4f} seconds.")
+        print("-----------------------------------------------------")
+    else:
+        if RECREATE_INDEX:
+            print("RECREATE_INDEX is True. Building index from scratch...")
+        else:
+            print("No existing index found. Building index from scratch...")
+
+        start_time_indexing = time.time()
+
+        # Load and chunk the document
+        try:
+            with open(TEXT_FILE_PATH, 'r', encoding='utf-8') as f:
+                text_content = f.read()
+        except FileNotFoundError:
+            print(f"Error: The file '{TEXT_FILE_PATH}' was not found.")
+            return
+
+        # Using a simple sentence-based chunking strategy
+        chunks = simple_text_splitter(text_content)
+        print(f"Document split into {len(chunks)} chunks.")
+
+        # Generate embeddings for each chunk
+        print("Generating embeddings for all chunks...")
+        chunk_embeddings = model.encode(chunks, show_progress_bar=True)
+
+        # Create a FAISS index
+        print("Creating FAISS index...")
+        # Using IndexFlatL2 - a simple L2 distance (Euclidean) index
+        index = faiss.IndexFlatL2(embedding_dim)
+        index.add(np.array(chunk_embeddings).astype('float32'))
+
+        # Save the index and the chunks
+        # We need to save the chunks themselves to retrieve the text later
+        faiss.write_index(index, FAISS_INDEX_PATH)
+        with open(FAISS_INDEX_PATH + ".json", 'w') as f:
+            json.dump(chunks, f)
+
+        end_time_indexing = time.time()
+        indexing_duration = end_time_indexing - start_time_indexing
+
+        print(f"FAISS index created and saved to '{FAISS_INDEX_PATH}'")
+        print("-----------------------------------------------------")
+        print(f"BENCHMARK: Indexing took {indexing_duration:.4f} seconds.")
+        print("-----------------------------------------------------")
 
 
     # ==================================================================
@@ -102,13 +154,16 @@ def main():
     query = "What was the Sinclair Sovereign and how much did it cost?"
     print(f"Sample Query: '{query}'")
 
-    start_time_retrieval = time.time()
+    
 
     # Embed the query
+    start_time_encoding = time.time()
     query_embedding = model.encode([query])
+    encoding_duration = time.time() - start_time_encoding
 
     # Search the FAISS index
     # D: distances, I: indices of the nearest neighbors
+    start_time_retrieval = time.time()
     D, I = index.search(np.array(query_embedding).astype('float32'), TOP_K)
 
     # Retrieve the actual text chunks
@@ -122,7 +177,8 @@ def main():
         print(f"  {i+1}. {chunk}")
 
     print("-----------------------------------------------------")
-    print(f"BENCHMARK: Search & Retrieval took {retrieval_duration:.4f} seconds.")
+    print(f"BENCHMARK: Query encoding took {encoding_duration:.4f} seconds.")
+    print(f"BENCHMARK: Retrieval took {retrieval_duration:.4f} seconds.")
     print("-----------------------------------------------------")
 
 
@@ -130,7 +186,7 @@ def main():
     # STAGE 3: LLM RESPONSE GENERATION
     # ==================================================================
     print("\n--- STAGE 3: LLM RESPONSE GENERATION ---")
-    
+
     # Prepare the context for the LLM
     context_str = "\n\n".join(retrieved_chunks)
 
@@ -148,44 +204,63 @@ Question:
 Answer:
 """
 
-    print("Sending request to Ollama...")
-    start_time_llm = time.time()
+    print(f"Running LLM generation {N_LLM_RUNS} times for statistics...")
+    print(f"(Using temperature={LLM_GEN_TEMPERATURE} and max_tokens={MAX_LLM_GEN_TOKENS} for consistency)\n")
+    llm_durations = []
+    generated_text = ""
 
     try:
-        response = requests.post(
-            OLLAMA_API_URL,
-            json={
-                "model": OLLAMA_MODEL_NAME,
-                "prompt": prompt,
-                "stream": False # We want the full response at once
-            },
-            timeout=120 # Add a timeout
-        )
-        response.raise_for_status() # Raise an exception for bad status codes
-        
-        generated_text = response.json().get('response', '').strip()
+        # Initialize the LLM client
+        with LLMClient(base_url=LLAMA_SERVER_BASE_URL, api_key="dummy") as client:
+            for run in range(N_LLM_RUNS):
+                print(f"  Run {run + 1}/{N_LLM_RUNS}...")
+                start_time_llm = time.time()
 
-    except requests.exceptions.RequestException as e:
-        print(f"\nError connecting to Ollama: {e}")
-        print("Please make sure Ollama is running and the model is available.")
+                response = client.chat.completions.create(
+                    model=DEFAULT_LLM_SERVER_MODEL,
+                    messages=[
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=LLM_GEN_TEMPERATURE,
+                    max_tokens=MAX_LLM_GEN_TOKENS,
+                    stream=False
+                )
+
+                end_time_llm = time.time()
+                llm_duration = end_time_llm - start_time_llm
+                llm_durations.append(llm_duration)
+
+                current_output = response.choices[0].message.content.strip()
+                print(f"    Time: {llm_duration:.4f}s")
+                print(f"    Output: {current_output}\n")
+
+                # Save the first response to display
+                if run == 0:
+                    generated_text = current_output
+
+    except Exception as e:
+        print(f"\nError connecting to llama-server: {e}")
+        print("Please make sure llama-server is running at the configured URL.")
         generated_text = "Error: Could not get a response from the LLM."
+        llm_durations = [0.0]  # Placeholder for error case
 
-    end_time_llm = time.time()
-    llm_duration = end_time_llm - start_time_llm
-
-    print("\nLLM Generated Answer:")
-    print(generated_text)
+    # Calculate statistics
+    llm_mean = np.mean(llm_durations)
+    llm_std = np.std(llm_durations)
 
     print("-----------------------------------------------------")
-    print(f"BENCHMARK: LLM Generation took {llm_duration:.4f} seconds.")
+    print(f"BENCHMARK: LLM Generation (avg over {N_LLM_RUNS} runs): {llm_mean:.4f} ± {llm_std:.4f} seconds")
+    print(f"           Min: {min(llm_durations):.4f}s, Max: {max(llm_durations):.4f}s")
     print("-----------------------------------------------------")
     
     print("\n--- Benchmark Summary ---")
     print(f"  Indexing:            {indexing_duration:.4f} seconds")
-    print(f"  Search & Retrieval:  {retrieval_duration:.4f} seconds")
-    print(f"  LLM Generation:      {llm_duration:.4f} seconds")
     print("--------------------------")
-    print(f"  Total RAG Pipeline:  {retrieval_duration + llm_duration:.4f} seconds (excluding one-time indexing)")
+    print(f"  Encoding Query:      {encoding_duration:.4f} seconds")
+    print(f"  Retrieval:           {retrieval_duration:.4f} seconds")
+    print(f"  LLM Generation:      {llm_mean:.4f} ± {llm_std:.4f} seconds (avg of {N_LLM_RUNS} runs)")
+    print("--------------------------")
+    print(f"  Total RAG Pipeline:  {encoding_duration + retrieval_duration + llm_mean:.4f} seconds (excluding one-time indexing)")
 
 
 if __name__ == "__main__":

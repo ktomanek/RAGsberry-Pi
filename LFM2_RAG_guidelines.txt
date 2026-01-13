@@ -1,0 +1,19 @@
+this is taken from: https://docs.liquid.ai/lfm/key-concepts/text-generation-and-prompting#lfm2-rag
+
+Prompting Guidelines
+
+
+LFM2-RAG
+Optimized for Retrieval-Augmented Generation. Use temperature=0 (greedy decoding). Provide relevant documents in the system prompt.
+
+System Prompt Format:
+
+The following documents may provide you additional information to answer questions:
+
+<document1>
+[Document content here]
+</document1>
+
+<document2>
+[Document content here]
+</document2>
