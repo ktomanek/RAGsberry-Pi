@@ -1,0 +1,156 @@
+ = Sinclair Sovereign = 
+
+
+ The Sinclair Sovereign was a high @-@ end calculator introduced by Clive Sinclair 's company Sinclair Radionics in 1976 . It was an attempt to escape from the unprofitable low end of the market , and one of the last calculators Sinclair produced . Made with a case of pressed steel that a variety of finishes , it cost between GB £ 30 and GB £ 60 at a time when other calculators could be purchased for under GB £ 5 . A number of factors meant that the Sovereign was not a commercial success , including the cost , high import levies on components , competition from cheaper calculators manufactured abroad , and the development of more power @-@ efficient designs using liquid @-@ crystal displays . Though it came with a five @-@ year guarantee , issues such as short battery life limited its usefulness . The company moved on to producing computers soon afterwards . 
+
+ The design by John Pemberton won a Design Council award , and there are examples of the Sovereign in the Museum of Modern Art in New York . It had a Mostek MK50321N main integrated circuit and a small memory register , a LED display , and could perform a variety of a number of basic mathematical operations besides four @-@ function arithmetic . 
+
+
+ = = History = = 
+
+
+ The Sovereign was one of the last calculators produced during Sinclair 's foray into the calculator market that had started with the Sinclair Executive in September 1972 . The Executive had retailed for GB £ 80 when introduced , but in little over a year it was possible to purchase a Sinclair calculator for GB £ 20 and by November of 1976 a model was available for GB £ 4 @.@ 95 . Cheaper calculators with liquid @-@ crystal displays instead of light @-@ emitting diodes were becoming more popular , and had much longer battery lives of months or years . Such calculators were available for well under GB £ 10 , with all the functionality of the more expensive models . The impossibility of selling " simple " calculators profitibly led Sinclair to introduce models such as the Cambridge Scientific , introduced in August 1975 at a price of GB £ 29 @.@ 95 . 
+
+ The Sovereign , released in 1976 , represented an attempt to move upmarket in an increasingly saturated market . In December 1976 , the chrome plated version of the Sovereign cost GB £ 30 and the gold @-@ plated version GB £ 60 , including VAT , but profit margins on the Sovereign were so small that Sinclair ended up selling the Sovereign at a loss , and it was not a commercial success . The Sovereign was made in England , like every other Sinclair calculator except the President . 
+
+ Sinclair would shortly stop producing calculators and instead focus on computers , starting with the MK14 in 1977 . The loss of the calculator market was due in part to technological development leading to smaller and cheaper components , which put heavy pressure on profit margins . An import levy of up to 17 @.@ 5 % was placed on components , but the duty for calculators imported from Japan or Hong Kong could be as little as 5 % , making it unprofitable to produce calculators in the UK . Sinclair also had some problems with the reliability of earlier calculators that had adversely affected its reputation , but the Sovereign was sold with a " full and unconditional " five year guarantee . 
+
+
+ = = Design = = 
+
+
+ The Sovereign came in satin chrome and gold @-@ plated models , with leather pouches and fitted wooden cases . It had an 8 @-@ digit seven @-@ segment display that used red light @-@ emitting diodes , with a decimal point to the right of each digit that could be illuminated as necessary . Power was provided by two 1 @.@ 35 mercury button cells . The Sovereign measured 36 by 141 by 12 millimetres ( 1 @.@ 42 in × 5 @.@ 55 in × 0 @.@ 47 in ) , which made it small and sleek compared to other calculators of the time . 
+
+ The Sovereign was unusual because the casing was made from pressed steel , which gave it a much higher quality feel compared to injection moulded plastic . This allowed a variety of paint and plating options , including black painted , chrome @-@ plated , silver @-@ plated , and gold @-@ plated , and a limited edition silver @-@ plated version , inscribed to commemorate the Silver Jubilee of Queen Elizabeth II in 1977 , were also produced . Asprey of London was rumoured to have produced two Sovereigns in solid gold , costing GB £ 2 @,@ 750 each . 
+
+ The design , by John Pemberton , won the Design Council Award in 1977 , as the Executive had in 1973 , and there are examples in the collection of the Museum of Modern Art in New York . Sovereigns are highly collectible , and used models command high prices . 
+
+
+ = = = Functions = = = 
+
+
+ As well as addition , subtraction , multiplication and division , it had reciprocal and square @-@ root functions , and the ability to multiply by a fixed constant . With an eight @-@ digit display , the calculator could display positive numbers between 0 @.@ 0000001 and 99 @,@ 999 @,@ 999 , and negative numbers between -0.000001 and -9,999,999 . Calculators of the time tended to have displays of between 3 and 12 digits , as reducing the number of digits was an effective way of reducing the cost of the calculator . A number outside that range leads to an overflow , and the screen flashes and all keys except the clear key are rendered inoperable to inform the user of the error . A independent memory register could read information from the screen , and information could only be taken from the memory onto the screen . Five keys were used for memory operations . 
+
+ The Sovereign used a Mostek MK50321N main integrated circuit , the same as the Sinclair Wrist Calculator and some variants of the Sinclair Cambridge . Clive Sinclair had assumed that people would prefer attractive illuminated LED displays to LCD displays , which incidentally also required more expensive CMOS chips . However , his calculators were designed with the assumption they would be turned off between calculations , which did not prove to be the case . Advertisements suggested that the batteries would last " about a year " under normal use , but in reality the small button cell batteries and comparatively high power consumption meant a short battery life compared to the competition . 
+
+
+
+ = Survivor Series ( 1992 ) = 
+
+
+ Survivor Series ( 1992 ) was the sixth annual Survivor Series pay @-@ per @-@ view professional wrestling event produced by the World Wrestling Federation ( WWF ) . It took place on November 25 , 1992 , at the Richfield Coliseum in Richfield Township , Ohio . The buildup to the pay @-@ per @-@ view consisted of feuds scripted by the WWF 's writers , and the matches that took place at the event had pre @-@ determined outcomes that had been decided by the company . 
+
+ In the main event , Bret Hart retained his WWF World Heavyweight Championship against Shawn Michaels . The card also included a highly @-@ promoted match in which the team of Randy Savage and Mr. Perfect defeated the team of Ric Flair and Razor Ramon by disqualification ; The Ultimate Warrior was advertised for the show but left the company and was replaced by Perfect . Also featured were two speciality matches : The Undertaker won a coffin match against Kamala , and The Big Boss Man defeated Nailz in a nightstick on a pole match . 
+
+ Some of the matches were changed after they were first announced , as several wrestlers left the WWF shortly before the event . Critics have praised the main event and the tag team match that was won by Savage and Perfect . Although the remaining bouts have received low ratings , critics have felt that those two matches made the event worth watching . 
+
+
+ = = Background = = 
+
+
+ In the storyline behind the match between The Big Boss Man and Nailz , Nailz claimed that while he was serving time in prison , the Big Boss Man , who was a guard at the prison , mistreated Nailz . In early 1992 , Nailz appeared in introductory vignettes to talk about his hatred of the Big Boss Man . Upon his debut in the WWF , Nailz attacked Bossman and stole his nightstick , which he used to attack his opponents over the following months . 
+
+ Shortly after Tatanka 's debut in the WWF , he became involved in a feud with Rick Martel . They faced each other at WrestleMania VIII , and Tatanka defeated Martel . The following month , Martel gained revenge by attacking Tatanka with an atomizer of cologne and stealing the eagle feathers that Tatanka carried to symbolize his Lumbee heritage . 
+
+ Ric Flair and his " executive consultant " Mr. Perfect had been allies in the WWF for much of 1992 . After Flair lost the WWF World Heavyweight Championship to Macho Man Randy Savage at WrestleMania VIII , Flair and Perfect initiated a feud with Savage . They interfered in Savage 's match at SummerSlam and caused him to lose by countout . The rivalry continued , and Flair received assistance from Perfect and Razor Ramon to win the title back from Savage on September 1 , which aired on the September 14 edition of WWF Prime Time Wrestling . The WWF planned for Savage to team with the Ultimate Warrior in a match against Flair and Ramon at Survivor Series . The Ultimate Warrior left the WWF , however , before the match could take place . Two possible reasons have been given for his departure . The first states that he was fired due to allegations of steroid abuse , while the other states that he was upset with the WWF 's future plans for his character . The WWF was forced to change the plan and decided to turn Perfect into a babyface ( fan favorite ) from a heel . Perfect and Flair began having conflicts while teaming together , and Perfect accepted Savage 's offer on the November 16 episode of WWF Prime Time Wrestling to team with him at Survivor Series . 
+
+ Money Inc . ( " Million Dollar Man " Ted DiBiase and Irwin R. Schyster ) had been feuding with The Natural Disasters ( Earthquake and Typhoon ) since February 1992 when manager Jimmy Hart turned on Earthquake and Typhoon in favor of helping Money , Inc . With Hart 's assistance , Money , Inc. defeated the Legion of Doom for the WWF Tag Team Championship on February 7 , 1992 . Five months later , Earthquake and Typhoon defeated Money Inc. to win the championship . The Natural Disasters were also feuding with The Beverly Brothers ( Beau and Blake ) and defeated them in a title match at SummerSlam 1992 . A match was then announced for Survivor Series in which The Natural Disasters would team with The Bushwhackers ( Luke and Butch ) to face Money , Inc. and the Beverly Brothers . However , when The Nasty Boys ( Brian Knobbs and Jerry Sags ) , also managed by Hart , were scheduled to face The Natural Disasters for the title on October 13 , Hart replaced The Nasty Boys at the last minute with Money , Inc . , who went on to regain the championship with help from The Headshrinkers . This led to a break @-@ up between Hart and the Nasty Boys , who received the Bushwhackers ' spot in the Survivor Series match to get revenge against Jimmy Hart and Money , Inc . 
+
+ At SummerSlam 1992 in August , The Undertaker defeated Kamala . Harvey Wippleman , Kamala 's manager wanted revenge , so a rematch was scheduled for Survivor Series . The match was promoted as the WWF 's first coffin match , in which the winner would place the loser in a coffin after the match . 
+
+ The WWF also planned a match featuring The British Bulldog defending the WWF Intercontinental Championship against The Mountie at Survivor Series . The WWF released Smith due to steroid allegations , however , and he was made to drop the title belt to Shawn Michaels on the November 14 episode of Saturday Night 's Main Event . Jake Roberts was set to challenge Bret Hart , who had won the WWF World Heavyweight Championship on October 12 , for his title , but the promotion could not come to terms with Roberts . Ultimately , the WWF neglected to include an Intercontinental Championship match on the card , instead pitting Michaels against Hart . In this match , Hart 's title was defended while Michaels ' title was not . 
+
+
+ = = Event = = 
+
+
+ Prior to the pay @-@ per @-@ view broadcast , Crush defeated the Repo Man via submission . In the first televised match , High Energy ( Owen Hart and Koko B. Ware ) faced The Headshrinkers ( Samu and Fatu ) . Samu used his strength advantage to control the opening of the match against Hart . Ware entered the match and gained the advantage over both opponents until he attempted to knock The Headshrinkers ' heads against each other . According to WWF storylines , Samoans like The Headshrinkers have thick skulls and cannot be hurt in the head ; as a result , The Headshrinkers no @-@ sold the attack . Afa , The Headshrinkers ' manager , attacked Ware while the referee was distracted . Samu and Fatu took turns attacking Ware , and Fatu performed a thrust kick on Ware . The Headshrinkers used rulebreaking tactics to control the match until Hart was able to enter the match . He performed dropkicks from the top rope against both Headshrinkers . As he tried to attack Samu from the top rope again , Samu caught him and powerslammed him before Fatu executed a diving splash to get the pinfall victory . 
+
+ The next match , between The Big Boss Man and Nailz , was a nightstick on a pole match . A nightstick was suspended above the ring and could be used as a weapon once it was retrieved . Nailz began the match by attempting to get the nightstick , but Boss Man stopped him . Nailz choked Boss Man before making another unsuccessful attempt to climb the pole and obtain the nightstick . Boss Man punched Nailz and then tried to climb the pole . Nailz stopped him , performed a back body drop , and choked Boss Man again . Boss Man regained control but missed a splash , which gave Nailz another chance to retrieve the nightstick . Both men clotheslined each other , but Boss Man recovered first and got the nightstick . He hit Nailz with it , but Nailz took it and used it against Boss Man . Boss Man performed the Boss Man slam , his finishing move , before pinning Nailz to win the match . 
+
+ Tatanka controlled the opening of the next match against " The Model " Rick Martel with several throws and dropkicks . Martel responded by wearing Tatanka down with a front facelock . Tatanka escaped , but Martel used another front facelock almost immediately . He performed a neckbreaker on Tatanka before going back to the same hold as before . Tatanka gained the advantage by performing a clothesline on Martel . Martel ran at Tatanka , but Tatanka moved out of the way and Martel hit his shoulder against the ring post . Tatanka focused on attacking Martel 's injured shoulder but eventually was thrown out of the ring by Martel . Martel 's advantage was short @-@ lived , as Tatanka performed a series of backhand chops and a Tomahawk chop from the top rope before nailing The Model with a Samoan drop . Tatanka got the pinfall victory and retrieved his feathers from Martel after the match . While the match was in progress , Doink the Clown , who had not yet been named or debuted as a wrestler in the WWF , stood in the aisle and made balloon animals before popping them to upset the children in the audience . 
+
+ In the next contest , Ric Flair and Razor Ramon wrestled against Mr. Perfect and Randy Savage . Ramon and Perfect began the match , but Flair entered after Perfect insulted him . Perfect threw Flair into the corner , and Flair 's momentum carried him over the top rope to the ring apron . Savage attacked Flair and then took Perfect 's place in the ring to maintain the advantage over Flair . From outside the ring , Ramon hit Savage with his knee and Flair and Ramon took turns attacking Savage 's knee . While Ramon performed a half Boston crab on Savage , Perfect considered leaving the match and abandoning Savage . Savage recovered briefly by trying to pin Flair , but Ramon performed a chokeslam on Savage . Ric Flair attempted to attack Savage from the top rope , but Savage threw him to the ring floor instead . Perfect executed a neckbreaker and an atomic drop on Ramon . Outside of the ring , Flair attacked Savage with a chair . The referee was knocked unconscious , and Perfect tried to pin Ramon by performing a PerfectPlex . Because no referee was available to count the pinfall , a substitute referee came to the ring . The first referee recovered as Perfect attempted to pin Flair with a PerfectPlex . Flair escaped the pin attempt , and he and Ramon attacked Perfect until the referees were unable to keep the match under control . As a result , Ramon and Flair were disqualified , and the victory was awarded to Perfect and Savage . 
+
+ In the next match , Virgil faced Yokozuna , who was billed at 505 pounds . Virgil was unable to knock Yokozuna down with several dropkicks . Yokozuna performed a savate kick on Virgil before throwing him to the ring floor twice . He executed a legdrop on Virgil , but Virgil regained the advantage when Yokozuna accidentally ran into the ring pole while trying to attack Virgil . Yokozuna won the match after a splash in the corner and a Banzai Drop . 
+
+ The following match was a tag team elimination match , in which The Natural Disasters ( Earthquake and Typhoon ) teamed with the Nasty Boys ( Jerry Sags and Brian Knobbs ) to face Money Inc . ( Ted DiBiase and Irwin R. Schyster ) and the Beverly Brothers ( Beau and Blake ) . The rules stated that when any man was eliminated , his tag team partner would also be eliminated . Blake Beverly and Typhoon began the match , but Beau and Earthquake soon entered the ring as well . The Natural Disasters gained control of the match by attacking Blake Beverly , and the Nasty Boys entered the ring to assist the Disasters . Blake attacked Sags and tagged out of the match . Beau entered but was bodyslammed by Sags ; Sags got distracted , however , which allowed Beau to suplex him and bring DiBiase into the match . Money Inc. took turns attacking Sags until Earthquake entered the ring . Earthquake performed an Earthquake splash by sitting on Beau Beverly to pin him and eliminate both Beverly Brothers . Earthquake fought DiBiase , but both men eventually left the ring and were replaced by their partners . Typhoon performed a splash on Schyster but was tripped by DiBiase . Schyster pinned Typhoon to eliminate The Natural Disasters . While Schyster was celebrating , Sags quickly pinned him to win the match for the Nasty Boys . 
+
+ The coffin match , in which The Undertaker faced Kamala , came next . Kamala began the match by running in fear from The Undertaker . He gained the early advantage , however , by suddenly turning around and attacking The Undertaker . Kamala bodyslammed The Undertaker three times and performed three splashes . In an attempt to revive The Undertaker , Paul Bearer , his manager , held up an urn that was said to be the source of The Undertaker 's power . Kim Chee , one of Kamala 's handler 's attacked Bearer . The Undertaker picked up the urn , which had rolled into the ring , and hit Kamala with it . The Undertaker pinned Kamala to win the match , placed him in a coffin , and nailed the lid shut . 
+
+ In the main event of the card , Bret Hart defended his WWF World Heavyweight Championship against Shawn Michaels . Hart controlled the beginning of the match by repeatedly executing armdrags and armbars but Michaels gained the advantage when " The Hitman " missed a charge into the corner and collided shoulder @-@ first with the ring post . Michaels then threw Hart into another ring post and wore him down by executing a front facelock . Hart was able to avoid Michaels ' first attempt at his finisher , the modified back suplex , and rallied with his trademark moves including an elbow from the second rope , running bulldog and a superplex . Michaels recovered and performed a superkick on Hart and was able this time to apply his suplex , but Hart kicked out . After Hart missed a desperation crossbody and crotched himself on the ropes , Shawn attempted a dropkick from the middle rope but Hart grabbed Michaels ' legs and applied the Sharpshooter , his finishing move . He retained his championship by forcing Michaels to submit . 
+
+
+ = = Aftermath = = 
+
+
+ Ric Flair and Mr. Perfect continued their feud , although Flair legitimately requested to be released from his WWF contract in order to return to World Championship Wrestling ( WCW ) . His request was granted on the condition that he help build up Perfect as a credible babyface . The two men attacked each other during the battle royal at Royal Rumble 1993 , and Perfect eliminated Flair from the match . The following night , Perfect defeated Flair in a loser leaves town match . Flair did not return to the WWF until McMahon purchased WCW in 2001 . 
+
+ The Undertaker 's feud with Harvey Wippleman continued for several months after Survivor Series . At Royal Rumble 1993 , Wippleman introduced a new wrestler named Giant Gonzalez . Despite not being scheduled in the match , Gonzalez attacked The Undertaker and eliminated him from the Royal Rumble match . The two men faced each other at WrestleMania IX , where Gonzalez was disqualified for attacking The Undertaker with a rag soaked in chloroform . Wippleman led Gonzalez and Mr. Hughes in another attack on The Undertaker , in which Hughes stole The Undertaker 's urn . The feud was resolved at SummerSlam 1993 , when The Undertaker defeated Gonzalez in a Rest in Peace match . 
+
+ Yokozuna 's push continued , and he won the battle royal main event at Royal Rumble 1993 to earn a WWF Championship match against Bret Hart at WrestleMania IX . At WrestleMania , he defeated Hart to win the title belt . He immediately challenged Hulk Hogan to a match however , and WrestleMania ended with Yokozuna losing the WWF Championship to Hogan in 21 seconds . 
+
+ Kevin Wacholz , who had portrayed Nailz , left the WWF shortly after Survivor Series . Upset about his pay from SummerSlam 1992 , he confronted WWF owner Vince McMahon and reportedly attacked him physically . He later testified against McMahon during a trial in which McMahon was accused of distributing steroids to wrestlers . Wacholz ' statements have been reported as having a harmful effect on the prosecution 's case because his anger at McMahon overshadowed his testimony . 
+
+ Shawn Michaels became involved in a feud with his former tag team partner , Marty Jannetty . The team had split up earlier in the year when Michaels attacked Jannetty . Michaels defeated Jannetty at Royal Rumble 1993 , but the two traded the Intercontinental Championship back and forth in subsequent rematches . 
+
+
+ = = = Reception = = = 
+
+
+ Survivor Series 1992 was attended by 17 @,@ 500 fans , the same number as the previous year . It drew more fans than any of the following three Survivor Series event would draw . The pay @-@ per @-@ view buyrate was 1 @.@ 4 , which means that 1 @.@ 4 percent of households to which the event was available purchased the pay @-@ per @-@ view . This was , to that point , the lowest buyrate in Survivor Series history and down more than one @-@ third from the previous year 's 2 @.@ 2 buyrate . The buyrate was higher than that of any of the following twelve Survivor Series events , however . 
+
+ Writing for The History of WWE , Matt Pettycord stated that the event was " pretty decent " considering that The Mountie , Davey Boy Smith , and the Ultimate Warrior left the company shortly before the event . On a five @-@ star scale , he rated only the Flair / Ramon vs. Savage / Perfect match and the Hart vs. Michaels match higher than one star . He stated that the event is " recommended , but not required " , although the WWF Championship match was a " must @-@ see " . 
+
+ Adam Gutschmidt , reviewing the event for Online Onslaught , gave a rating of one @-@ quarter star for the Nightstick on a Pole match and one @-@ half star each for the High Energy vs. The Headshrinkers match and the Yokozuna vs. Virgil match . He enjoyed the WWF Championship match , although he was disappointed by its lack of buildup prior to the event . He also felt that the Flair / Ramon vs. Savage / Perfect match was a good one until the ending got out of control . Pro Wrestling Torch columnist agreed , stating that the WWF Championship match was the best and that the Flair / Ramon vs. Savage / Perfect bout was also enjoyable , but he recommended fast @-@ forwarding through the rest of the show . 
+
+ The event was released in North America on VHS by Coliseum Video on February 11 , 1993 . The VHS version was released in the United Kingdom on March 8 , 1993 . A DVD version is also available in the United Kingdom ; it was packaged together with Survivor Series 1991 as part of the WWE Tagged Classics line and released on November 7 , 2005 . 
+
+
+ = = Results = = 
+
+
+
+ = = = Survivor Series elimination match = = = 
+
+
+ ^ 1 
+
+
+
+ = Ouw Peh Tjoa = 
+
+
+ Ouw Peh Tjoa ( Chinese : 水淹金山 ; Hokkien for Black and White Snakes ) , also known by the Malay @-@ language title Doea Siloeman Oeler Poeti en Item ( meaning Two Snakes , One White and One Black ) , is a 1934 film from the Dutch East Indies ( now Indonesia ) . It was directed and produced by The Teng Chun . Adapted from Legend of the White Snake , a Chinese folktale , it follows a magical snake who passes as a human but ultimately dies . The film , now possibly lost , was followed by one sequel , Anaknja Siloeman Oeler Poeti , in 1936 . 
+
+
+ = = Plot = = 
+
+
+ After meditating for several hundred years , a magical white snake transforms into a beautiful woman . Her competitor , a black snake , does likewise . The two compete for the love of a man named Khouw Han Boen . Ultimately Khouw agrees to marry the ( former ) white snake , but when her true identity is revealed he attempts to cancel their wedding . The snake @-@ woman , crying , tells Khouw 's boss that they are to be married , and ultimately Khouw is guilted into marrying her . 
+
+ As time passes , Khouw sees his wife occasionally transform into a snake . She is always , however , able to convince him otherwise . He falls further in love with her , and their marriage is a happy one . After several months he is accosted by a priest , Hoat Hae Sian Soe , who then leads an attempt to kill the snake @-@ woman . She escapes , pursued by the priests . 
+
+ The priests catch the snake and prepare to kill her , but are stopped by the goddess Kwan Im , who tells the stunned pursuers that the snake is pregnant and thus must not be killed . A month after the snake gives birth , the priests return . The snake @-@ woman gives her child to Khouw and then surrenders herself to her fate . She is captured in a magical jar and brought away . 
+
+
+ = = Production = = 
+
+
+ Ouw Peh Tjoa was directed and produced by The Teng Chun for his company , Cino Motion Pictures . Since releasing Sam Pek Eng Tay in 1931 , based on the legend of the Butterfly Lovers , The Teng Chun had released a series of films based on Chinese legends and folktales , including Pat Bie To ( Eight Beautiful Women ; 1932 ) and Pat Kiam Hiap ( Eight Swordsmen ; 1933 ) . These stories were selected because the peranakan Chinese in the Indies were unable to understand Mandarin and Cantonese imports from China , but wanted to see films based on Chinese mythology . Overall , The Teng Chun 's films emphasised the martial art silat and were generally profitable , allowing him to dominate the industry . 
+
+ The cast of this black @-@ and @-@ white film is unrecorded . The dialogue , captured by the film 's director @-@ cum @-@ producer , was in Malay . The snakes used in the production of this film came from The Teng Chun 's personal zoo . 
+
+
+ = = Release and reception = = 
+
+
+ According to The , in a 1970s interview , Ouw Peh Tjoa was released in 1934 . Newspaper advertisements show the film being screened by February 1935 . The film mostly targeted ethnic Chinese audiences . Advertising material , however , emphasised the use of spoken Malay and described the film as " full of astonishments and all forms of magic fights " ; through these action sequences , Ouw Peh Tjoa proved popular among native audiences . The film was exported to Singapore , part of the Straits Settlements , where there was a large ethnic Chinese population . 
+
+ The success of Ouw Peh Tjoa allowed The Teng Chun to import new equipment for his studio ( renamed Java Industrial Film ) , which he used in his future productions . The film was followed in 1936 by a sequel , Anaknja Siloeman Oeler Poeti ( Child of the White Snake ) . The Teng Chun continued releasing films based on Chinese legends until 1937 , a year after Albert Balink 's Pareh changed domestic perceptions of profitable film storylines . The 's later films adapted stories closer to the native populace of the Indies and focussing on events that could happen in day @-@ to @-@ day life . Through 1940 and 1941 Java Industrial Films was the most productive studio in the Indies , until it was shut down during the Japanese occupation which began in March 1942 . 
+
+ Screenings of Ouw Peh Tjoa continued until at least 1953 . The film is now likely lost . Movies in the Indies were recorded on highly flammable nitrate film , and after a fire destroyed much of Produksi Film Negara 's warehouse in 1952 , old films shot on nitrate were deliberately destroyed . As such , the American visual anthropologist Karl G. Heider writes that all Indonesian films from before 1950 are lost . However , JB Kristanto 's Katalog Film Indonesia ( Indonesian Film Catalogue ) records several as having survived at Sinematek Indonesia 's archives , and Biran writes that several Japanese propaganda films have survived at the Netherlands Government Information Service . 
+
+
+ = = Explanatory notes = = 
+

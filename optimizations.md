@@ -85,17 +85,3 @@ Gemma3 1b | 0.8827 ± 0.1609 seconds (avg of 5 runs)
 * add baseline to results --> without RAG
 
 
-# generate the index
-# note: file is from wikipedia. "=" means a new topic is starting. Multiple "=" means a subtopic.
-# here is an example:
-# = Main Topic =
-# Some text about the main topic.
-# == Subtopic 1 ==
-# Some text about subtopic 1.
-# == Subtopic 2 ==
-# Some text about subtopic 2.
-# = Another Main Topic =
-# Some text about another main topic.
-# ...
-#
-# So now for the index to be very helpful, I want you to split like before but prepend each chunk with the topic it belongs to.

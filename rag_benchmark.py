@@ -9,7 +9,13 @@ from llm_client import LLMClient
 # --- Configuration ---
 # Stage 1: Index Loading Configuration
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-FAISS_INDEX_PATH = "index_my_document.faiss"
+
+
+# optimized index, chunk size 5, overlap 1
+FAISS_INDEX_PATH = "index_optimized_5_1.faiss"
+
+# # original index
+# FAISS_INDEX_PATH = "index_my_document.faiss"
 
 # Stage 2: Search & Retrieval Configuration
 TOP_K = 3 # Number of relevant chunks to retrieve
