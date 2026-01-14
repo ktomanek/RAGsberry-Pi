@@ -11,11 +11,18 @@ from llm_client import LLMClient
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 
-# optimized index, chunk size 5, overlap 1
-FAISS_INDEX_PATH = "index_optimized_5_1.faiss"
+# # optimized index, chunk size 5, overlap 1
+# FAISS_INDEX_PATH = "index_optimized_5_1.faiss"
+
+# FAISS_INDEX_PATH = "index_optimized_sentence_3_1.faiss"
+
+FAISS_INDEX_PATH = "index_optimized_linebased.faiss"
 
 # # original index
 # FAISS_INDEX_PATH = "index_my_document.faiss"
+
+
+# FAISS_INDEX_PATH = None
 
 # Stage 2: Search & Retrieval Configuration
 TOP_K = 3 # Number of relevant chunks to retrieve
@@ -75,6 +82,72 @@ def load_index(faiss_index_path, embedding_model_name):
 def main():
     print("--- RAG Performance Benchmark on Raspberry Pi ---")
 
+
+    # ==================================================================
+    # STAGE 1: LOAD INDEX
+    # ==================================================================
+    print("\n--- STAGE 1: LOAD INDEX ---")
+
+    if not FAISS_INDEX_PATH:
+        print("Not loading index -- will just use LLM without retrieval.")
+        indexing_duration = 0
+    else:
+        # Check if index exists
+        if not (os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_INDEX_PATH + ".json")):
+            print(f"Error: Index not found at '{FAISS_INDEX_PATH}'")
+            print("\nTo create an index, run:")
+            print(f"  python index_generation.py --index-path {FAISS_INDEX_PATH}")
+            return
+
+        index, chunks, model, indexing_duration = load_index(
+            faiss_index_path=FAISS_INDEX_PATH,
+            embedding_model_name=EMBEDDING_MODEL_NAME
+        )
+
+
+    # ==================================================================
+    # STAGE 2: SEARCH & RETRIEVAL
+    # ==================================================================
+    query = USER_QUERY
+    print(f"Sample Query: '{query}'")
+
+
+    if not FAISS_INDEX_PATH:
+        print("\nIndex not loaded; skipping search & retrieval stage.")
+        encoding_duration = 0
+        retrieval_duration = 0
+    else:
+        print("\n--- STAGE 2: SEARCH & RETRIEVAL ---")
+        
+
+        
+
+        # Embed the query
+        start_time_encoding = time.time()
+        query_embedding = model.encode([query])
+        encoding_duration = time.time() - start_time_encoding
+
+        # Search the FAISS index
+        # D: distances, I: indices of the nearest neighbors
+        start_time_retrieval = time.time()
+        D, I = index.search(np.array(query_embedding).astype('float32'), TOP_K)
+
+        # Retrieve the actual text chunks
+        retrieved_chunks = [chunks[i] for i in I[0]]
+        
+        end_time_retrieval = time.time()
+        retrieval_duration = end_time_retrieval - start_time_retrieval
+
+        print(f"\nTop {TOP_K} relevant chunks found:")
+        for i, chunk in enumerate(retrieved_chunks):
+            print(f"  {i+1}. {chunk}")
+
+        print("-----------------------------------------------------")
+        print(f"BENCHMARK: Query encoding took {encoding_duration:.4f} seconds.")
+        print(f"BENCHMARK: Retrieval took {retrieval_duration:.4f} seconds.")
+        print("-----------------------------------------------------")
+
+
     # ==================================================================
     # WARMUP: LLM
     # ==================================================================
@@ -98,64 +171,6 @@ def main():
         print(f"Warning: Could not warm up LLM: {e}")
         print("Continuing with benchmark - first LLM call may be slower.")
 
-    # ==================================================================
-    # STAGE 1: LOAD INDEX
-    # ==================================================================
-    print("\n--- STAGE 1: LOAD INDEX ---")
-
-    # Check if index exists
-    if not (os.path.exists(FAISS_INDEX_PATH) and os.path.exists(FAISS_INDEX_PATH + ".json")):
-        print(f"Error: Index not found at '{FAISS_INDEX_PATH}'")
-        print("\nTo create an index, run:")
-        print(f"  python index_generation.py --index-path {FAISS_INDEX_PATH}")
-        return
-
-    # Load existing index
-    try:
-        index, chunks, model, indexing_duration = load_index(
-            faiss_index_path=FAISS_INDEX_PATH,
-            embedding_model_name=EMBEDDING_MODEL_NAME
-        )
-    except Exception as e:
-        print(f"Error loading index: {e}")
-        return
-
-
-    # ==================================================================
-    # STAGE 2: SEARCH & RETRIEVAL
-    # ==================================================================
-    print("\n--- STAGE 2: SEARCH & RETRIEVAL ---")
-    
-    query = USER_QUERY
-    print(f"Sample Query: '{query}'")
-
-    
-
-    # Embed the query
-    start_time_encoding = time.time()
-    query_embedding = model.encode([query])
-    encoding_duration = time.time() - start_time_encoding
-
-    # Search the FAISS index
-    # D: distances, I: indices of the nearest neighbors
-    start_time_retrieval = time.time()
-    D, I = index.search(np.array(query_embedding).astype('float32'), TOP_K)
-
-    # Retrieve the actual text chunks
-    retrieved_chunks = [chunks[i] for i in I[0]]
-    
-    end_time_retrieval = time.time()
-    retrieval_duration = end_time_retrieval - start_time_retrieval
-
-    print(f"\nTop {TOP_K} relevant chunks found:")
-    for i, chunk in enumerate(retrieved_chunks):
-        print(f"  {i+1}. {chunk}")
-
-    print("-----------------------------------------------------")
-    print(f"BENCHMARK: Query encoding took {encoding_duration:.4f} seconds.")
-    print(f"BENCHMARK: Retrieval took {retrieval_duration:.4f} seconds.")
-    print("-----------------------------------------------------")
-
 
     # ==================================================================
     # STAGE 3: LLM RESPONSE GENERATION
@@ -164,39 +179,46 @@ def main():
     print(f"Using prompt format: {PROMPT_FORMAT}")
 
     # Prepare the messages based on the selected prompt format
-    if PROMPT_FORMAT == "lfm2-rag":
-        # LFM2-RAG format: system message with documents, user message with question
-        documents_str = ""
-        for i, chunk in enumerate(retrieved_chunks, 1):
-            documents_str += f"<document{i}>\n{chunk}\n</document{i}>\n\n"
-
-        system_message = f"""The following documents may provide you additional information to answer questions:
-
-{documents_str.strip()}
-
-Instructions: Provide clear, concise answers based only on the information in the documents. Limit your response to 3-4 sentences maximum. Be direct and avoid unnecessary elaboration."""
+    if not FAISS_INDEX_PATH:
+        system_message = "Instructions: Provide clear, concise answers based on what you know. Limit your response to 3-4 sentences maximum. Be direct and avoid unnecessary elaboration."
         messages = [
             {"role": "system", "content": system_message},
             {"role": "user", "content": query}
         ]
     else:
-        # Default format: single user message with context and question
-        context_str = "\n\n".join(retrieved_chunks)
-        prompt = f"""Based on the following context, please answer the user's question concisely and directly.
-If the context does not contain the answer, state that the information is not available in the provided context.
-Limit your response to 3-4 sentences maximum. Be clear and focused - avoid unnecessary elaboration.
+        if PROMPT_FORMAT == "lfm2-rag":
+            # LFM2-RAG format: system message with documents, user message with question
+            documents_str = ""
+            for i, chunk in enumerate(retrieved_chunks, 1):
+                documents_str += f"<document{i}>\n{chunk}\n</document{i}>\n\n"
 
-Context:
-{context_str}
+            system_message = f"""The following documents may provide you additional information to answer questions:
 
-Question:
-{query}
+    {documents_str.strip()}
 
-Answer:
-"""
-        messages = [
-            {"role": "user", "content": prompt}
-        ]
+    Instructions: Provide clear, concise answers based only on the information in the documents. Limit your response to 3-4 sentences maximum. Be direct and avoid unnecessary elaboration."""
+            messages = [
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": query}
+            ]
+        else:
+            # Default format: single user message with context and question
+            context_str = "\n\n".join(retrieved_chunks)
+            prompt = f"""Based on the following context, please answer the user's question concisely and directly.
+    If the context does not contain the answer, state that the information is not available in the provided context.
+    Limit your response to 3-4 sentences maximum. Be clear and focused - avoid unnecessary elaboration.
+
+    Context:
+    {context_str}
+
+    Question:
+    {query}
+
+    Answer:
+    """
+            messages = [
+                {"role": "user", "content": prompt}
+            ]
 
     # Debug: Print the prompt if DEBUG_PROMPT is enabled
     if DEBUG_PROMPT:

@@ -108,15 +108,31 @@ def simple_text_splitter(text, chunk_size=3, chunk_overlap=1):
     return chunks
 
 
-def optimized_text_splitter(text, chunk_size=5, chunk_overlap=1, verbose=False):
+def line_based_splitter(text):
+    """
+    Simple line-based splitter - each non-empty line becomes a chunk.
+
+    Args:
+        text: Text to split
+
+    Returns:
+        List of non-empty lines
+    """
+    lines = text.split('\n')
+    chunks = [line.strip() for line in lines if line.strip()]
+    return chunks
+
+
+def optimized_text_splitter(text, chunk_size=5, chunk_overlap=1, chunking_strategy="sentence", verbose=False):
     """
     Optimized text splitter that parses Wikipedia topics and prepends
     topic context to each chunk.
 
     Args:
         text: Full text content
-        chunk_size: Number of sentences per chunk
-        chunk_overlap: Number of overlapping sentences between chunks
+        chunk_size: Number of sentences per chunk (only used for 'sentence' strategy)
+        chunk_overlap: Number of overlapping sentences between chunks (only used for 'sentence' strategy)
+        chunking_strategy: "line" (each line is a chunk) or "sentence" (sentence-based with overlap)
         verbose: If True, print each chunk as it's generated
 
     Returns:
@@ -128,13 +144,17 @@ def optimized_text_splitter(text, chunk_size=5, chunk_overlap=1, verbose=False):
     if verbose:
         print(f"\n{'='*60}")
         print(f"Found {len(sections)} topic sections")
+        print(f"Chunking strategy: {chunking_strategy}")
         print(f"{'='*60}\n")
 
     all_chunks = []
 
     for topic_path, content in sections:
-        # Split the content into sentence-based chunks
-        content_chunks = simple_text_splitter(content, chunk_size, chunk_overlap)
+        # Split the content based on chosen strategy
+        if chunking_strategy == "line":
+            content_chunks = line_based_splitter(content)
+        else:  # sentence-based
+            content_chunks = simple_text_splitter(content, chunk_size, chunk_overlap)
 
         # Prepend topic context to each chunk
         for chunk in content_chunks:
@@ -261,7 +281,7 @@ def main():
     parser.add_argument(
         '--chunk-size',
         type=int,
-        default=5,
+        default=3,
         help='Number of sentences per chunk (default: 5)'
     )
     parser.add_argument(
