@@ -83,5 +83,5 @@ Gemma3 1b | 0.8827 ± 0.1609 seconds (avg of 5 runs)
 * test gemma3 270 on RPI
 * construct a few better test cases to test efficiency
 * add baseline to results --> without RAG
-
+* thresholding to exclude non-fitting docs
 

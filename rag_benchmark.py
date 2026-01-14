@@ -14,9 +14,9 @@ EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 # # optimized index, chunk size 5, overlap 1
 # FAISS_INDEX_PATH = "index_optimized_5_1.faiss"
 
-# FAISS_INDEX_PATH = "index_optimized_sentence_3_1.faiss"
+FAISS_INDEX_PATH = "index_optimized_sentence_3_1.faiss"
 
-FAISS_INDEX_PATH = "index_optimized_linebased.faiss"
+# FAISS_INDEX_PATH = "index_optimized_linebased.faiss"
 
 # # original index
 # FAISS_INDEX_PATH = "index_my_document.faiss"
@@ -27,7 +27,11 @@ FAISS_INDEX_PATH = "index_optimized_linebased.faiss"
 # Stage 2: Search & Retrieval Configuration
 TOP_K = 3 # Number of relevant chunks to retrieve
 
-USER_QUERY = "What was the Sinclair Sovereign? Include what type of device it was, the year it was introduced, its price range, and one notable or special fact about it."
+# USER_QUERY = "What was the Sinclair Sovereign? Include what type of device it was, the year it was introduced, its price range, and one notable or special fact about it."
+
+# USER_QUERY = "Is there a university in Boca Raton, Florida ?"
+
+USER_QUERY = "What is the song Bossy about?"
 
 # Stage 3: LLM Response Configuration
 LLAMA_SERVER_BASE_URL = "http://localhost:8080/v1"  # llama-server OpenAI-compatible API
